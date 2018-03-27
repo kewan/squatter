@@ -36,8 +36,8 @@ class SquatterProvider extends ServiceProvider
             return;
         }
 
-        $this->app->singleton('squatter', function ($app) use ($request) {
-            return new TenantManager($request->getHost(), config('squatter.class'), config['squatter.subdomain_field_name']);
+        $this->app->singleton('Squatter', function ($app) use ($request) {
+            return new TenantManager($request->getHost(), config('squatter.class'), config('squatter.subdomain_field_name'));
         });
     }
 }
