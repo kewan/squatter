@@ -17,6 +17,6 @@ class TenantScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        return $builder->where($model->getTable() . '.' . $model->getForeignKey(), Squatter::get()->id);
+        return $builder->where($model->getTable() . '.' . Squatter::get()->getForeignKey(), Squatter::get()->id);
     }
 }
