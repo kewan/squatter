@@ -1,5 +1,5 @@
 <?php
 
 function squatter() {
-    return app('squatter')->get();
+    return \Kewan\Squatter\Facade\Squatter::tenant();
 }

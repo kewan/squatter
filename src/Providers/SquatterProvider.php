@@ -16,11 +16,25 @@ class SquatterProvider extends ServiceProvider
      */
     public function boot(Request $request)
     {
-        $this->publishes([
-            __DIR__ . '/../../config/squatter.php' => config_path('squatter.php'),
-        ]);
+        if (function_exists('config_path')) {
+            $this->publishes([
+                __DIR__ . '/../../config/squatter.php' => config_path('squatter.php'),
+            ]);
+        }
 
         $this->bootSquatter($request);
+    }
+
+    /**
+     * Register bindings in the container.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/squatter.php', 'squatter'
+        );
     }
 
     /**
@@ -36,7 +50,7 @@ class SquatterProvider extends ServiceProvider
             return;
         }
 
-        $this->app->singleton('Squatter', function ($app) use ($request) {
+        $this->app->singleton(TenantManager::class, function ($app) use ($request) {
             return new TenantManager($request->getHost(), config('squatter.class'), config('squatter.subdomain_field_name'));
         });
     }
