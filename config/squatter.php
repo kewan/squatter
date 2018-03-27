@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'class' => 'App/Account',
+    'class' => '\App\Tenant',
     'subdomain_field_name' => 'subdomain'
 ];

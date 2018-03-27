@@ -2,7 +2,7 @@
 
 namespace Kewan\Squatter\Tests\Fixtures;
 
-class Account extends \Illuminate\Database\Eloquent\Model
+class Tenant extends \Illuminate\Database\Eloquent\Model
 {
     public $guarded = [];
     public $timestamps = false;

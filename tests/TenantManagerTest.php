@@ -11,7 +11,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 use Kewan\Squatter\Exceptions\TenantNotFoundException;
 use Kewan\Squatter\TenantManager;
-use Kewan\Squatter\Tests\Fixtures\Account;
+use Kewan\Squatter\Tests\Fixtures\Tenant;
 
 class TenantManagerTest extends \PHPUnit\Framework\TestCase
 {
@@ -30,24 +30,24 @@ class TenantManagerTest extends \PHPUnit\Framework\TestCase
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
 
-        Capsule::schema()->create('accounts', function (Blueprint $table) {
+        Capsule::schema()->create('tenants', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('subdomain');
         });
 
-        $this->tenant = Account::create(['name' => 'One', 'subdomain' => 'one']);
+        $this->tenant = Tenant::create(['name' => 'One', 'subdomain' => 'one']);
     }
 
     public function testFindValidTenant()
     {
-        $tenantManager = new TenantManager('one.test.com', Account::class, 'subdomain');
+        $tenantManager = new TenantManager('one.test.com', Tenant::class, 'subdomain');
         $this->assertEquals($this->tenant->id, $tenantManager->tenant()->id);
     }
 
     public function testFindInValidTenant()
     {
-        $tenantManager = new TenantManager('two.test.com', Account::class, 'subdomain');
+        $tenantManager = new TenantManager('two.test.com', Tenant::class, 'subdomain');
 
         $this->expectException(TenantNotFoundException::class);
 
@@ -56,7 +56,7 @@ class TenantManagerTest extends \PHPUnit\Framework\TestCase
 
     public function testFindByIncorrectSubdomainFieldName()
     {
-        $tenantManager = new TenantManager('one.test.com', Account::class, 'sub');
+        $tenantManager = new TenantManager('one.test.com', Tenant::class, 'sub');
 
         $this->expectException(TenantNotFoundException::class);
 
