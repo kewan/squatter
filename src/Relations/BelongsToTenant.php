@@ -11,7 +11,7 @@ use Kewan\Squatter\Scopes\TenantScope;
 
 trait BelongsToTenant
 {
-    public static function bootSquatter() {
+    public static function bootBelongsToTenant() {
         static::addGlobalScope(new TenantScope());
     }
 }
