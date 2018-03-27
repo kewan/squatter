@@ -5,7 +5,7 @@
  * Time: 2:05 PM
  */
 
-namespace Kewan\Squatter\Facade;
+namespace Kewan\Squatter\Facades;
 
 
 use Illuminate\Support\Facades\Facade;

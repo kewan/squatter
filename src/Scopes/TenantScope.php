@@ -7,11 +7,10 @@
 
 namespace Kewan\Squatter\Scopes;
 
-
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
-use Kewan\Squatter\Facade\Squatter;
+use Kewan\Squatter\Facades\Squatter;
 
 class TenantScope implements Scope
 {
