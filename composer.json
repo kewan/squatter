@@ -1,0 +1,40 @@
+{
+    "name": "kewan/squatter",
+    "description": "Very basic single db multi tenant setup for laravel",
+    "type": "library",
+  "license": "MIT",
+    "authors": [
+      {
+        "name": "Kewan",
+        "email": "kewan@kewanshunn.com"
+      }
+    ],
+    "require": {
+        "illuminate/support": "^5.6",
+        "illuminate/database": "^5.6",
+        "illuminate/http": "^5.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0",
+        "mockery/mockery": "dev-master",
+        "fzaninotto/faker": "^1.4"
+    },
+  "autoload": {
+    "psr-4": {
+      "Kewan\\Squatter\\": "src/"
+    },
+    "files": [
+      "src/Support/helpers.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Kewan\\Squatter\\Providers\\SquatterProvider"
+      ],
+      "aliases": {
+        "Squatter": "Kewan\\Squatter\\Facades\\Squatter"
+      }
+    }
+  }
+}
