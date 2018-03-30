@@ -2,7 +2,7 @@
 
 namespace Kewan\Squatter;
 
-use Illuminate\Contracts\Database\ModelIdentifier;
+use Illuminate\Database\Eloquent\Model;
 use Kewan\Squatter\Exceptions\TenantNotFoundException;
 
 class TenantManager {
@@ -22,7 +22,7 @@ class TenantManager {
         $this->subdomainField = $subdomainField ?: 'subdomain';
     }
 
-    public function set(ModelIdentifier $tenant) {
+    public function set(Model $tenant) {
         $this->tenant = $tenant;
         $this->subdomain = $tenant->{$this->subdomainField};
     }
