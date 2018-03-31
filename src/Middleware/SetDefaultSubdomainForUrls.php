@@ -17,8 +17,12 @@ class SetDefaultSubdomainForUrls
      */
     public function handle($request, Closure $next)
     {
-        $subdomainField = config('squatter.subdomain_field_name');
-        URL::defaults([$subdomainField => preg_replace('/^([^\.]+).*/', '$1', $request->getHost())]);
+        $subdomain = preg_replace('/^([^\.]+).*/', '$1', $request->getHost());
+
+        if (!in_array($subdomain, config('squatter.reserved_subdomains'))) {
+            $subdomainField = config('squatter.subdomain_field_name');
+            URL::defaults([$subdomainField => squatter()->$subdomainField]);
+        }
 
         return $next($request);
     }
