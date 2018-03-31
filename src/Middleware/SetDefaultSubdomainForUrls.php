@@ -1,11 +1,12 @@
 <?php
 
-namespace Kewan\Squatter\Routing\Middleware;
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\URL;
+use Kewan\Squatter\Exceptions\TenantNotFoundException;
 
-class Tenanted
+class SetDefaultSubdomainForUrls
 {
     /**
      * Handle an incoming request.
@@ -16,11 +17,8 @@ class Tenanted
      */
     public function handle($request, Closure $next)
     {
-        $tenant = squatter();
-
         $subdomainField = config('squatter.subdomain_field_name');
-
-        URL::defaults([$subdomainField => $tenant->$subdomainField]);
+        URL::defaults([$subdomainField => preg_replace('/^([^\.]+).*/', '$1', $request->getHost())]);
 
         return $next($request);
     }
