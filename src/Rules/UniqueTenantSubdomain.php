@@ -4,12 +4,17 @@ namespace Kewan\Squatter\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class SubdomainNotReserved implements Rule
+class UniqueTenantSubdomain implements Rule
 {
     /**
-     * @var array
+     * @var string
      */
-    protected $reservedWords;
+    protected $tenantClass;
+
+    /**
+     * @var string
+     */
+    protected $subdomainField;
 
     /**
      * Create a new rule instance.
@@ -18,7 +23,8 @@ class SubdomainNotReserved implements Rule
      */
     public function __construct()
     {
-        $this->reservedWords = config('squatter.reserved_subdomains');
+        $this->tenantClass = config('squatter.class');
+        $this->subdomainField = config('squatter.subdomain_field_name');
     }
 
     /**
@@ -30,7 +36,8 @@ class SubdomainNotReserved implements Rule
      */
     public function passes($attribute, $value)
     {
-        return !in_array($value, $this->reservedWords);
+        $existingTenant = (new $this->tenantClass)->where($this->subdomainField, $value)->count();
+        return $existingTenant == 0;
     }
 
     /**
@@ -40,6 +47,6 @@ class SubdomainNotReserved implements Rule
      */
     public function message()
     {
-        return 'The :attribute is invalid';
+        return 'The :attribute is already taken.';
     }
 }
