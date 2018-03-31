@@ -29,6 +29,10 @@ class TenantManager {
 
     public function tenant()
     {
+        if (in_array($this->subdomain, config('squatter.reserved_subdomains'))) {
+            return null;
+        }
+        
         if($this->tenant && $this->subdomain == $this->tenant->{$this->subdomainField}) {
             return $this->tenant;
         }
